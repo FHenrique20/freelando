@@ -1,9 +1,70 @@
 <div class="cadastro-form">
   <div class="cadastro-form__container">
     <div class="cadastro-form__card">
-      <h2 class="cadastro-form__title">Crie seu cadastro.</h2>
+      <h2 class="cadastro-form__title">Crie seu cadastro</h2>
 
+      <form [formGroup]="cadastroForm" (ngSubmit)="onProximo()">
+        <div class="cadastro-form_section">
+          <h3 class="cadastro-form_section_title">Qual a área de atuação?</h3>
+        </div>
+        <div>
+          <app-radio-option
+            *ngFor="let area of areasAtuacao"
+            [id]="area.id"
+            [name]="'areasAtuacao'"
+            [value]="area.value"
+            [label]="area.label"
+            [checked]="cadastroForm.get('areaAtuação')?.value === area.value"
+            (selectionChange)="onAreaChange($event)"
+          >
+          </app-radio-option>
 
+          <div
+            *ngIf="
+              cadastroForm.get('areaAtuacao')?.touched &&
+              cadastroForm.get('areaAtuacao')?.invalid
+            "
+            class="cadastro-form__error"
+          >
+            Por favor, selecione uma área de atuação.
+          </div>
+        </div>
+
+        <div class="cadastro-form_section">
+          <h3 class="cadastro-form_section_title">Nível de Experiência</h3>
+          <app-experience-level
+            [levels]="niveisExperiencia"
+            [selectedLevel]="cadastroForm.get('niveisExperiencia')?.value"
+            (levelChange)="onNivelChange($event)"
+          >
+          </app-experience-level>
+          <div
+            *ngIf="
+              cadastroForm.get('nivelExperiencia')?.touched &&
+              cadastroForm.get('nivelExperiencia')?.invalid
+            "
+            class="cadastro-form__error"
+          >
+            Por favor, selecione um nível de experiência.
+          </div>
+        </div>
+        <div class="cadastro-form_actions">
+          <app-button
+            text="Anterior"
+            type="outline"
+            icon="fas fa-arrow-left"
+            iconPosition="left"
+            (clicked)="onAnterior()">
+          </app-button>
+                    <app-button
+            text="Proximo"
+            type="outline"
+            icon="fas fa-arrow-right"
+            iconPosition="right"
+            (clicked)="onProximo()">
+          </app-button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
