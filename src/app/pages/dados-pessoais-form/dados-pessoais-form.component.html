@@ -29,6 +29,25 @@
           >
             Nome Completo é obrigatório
           </div>
+
+          <label for="cpf" class="cadastro-form__label">CPF </label>
+          <input
+            id="cpf"
+            type="text"
+            class="cadastro-form__input"
+            placeholder="000.000.000-00"
+            formControlName="cpf"
+            maxlength="11"
+          />
+            @if (dadosPessoaisForm.get('cpf')?.errors?.['required'] &&
+            dadosPessoaisForm.get('cpf')?.touched) {
+            <div class="cadastro-form__error">CPF é obrigatório</div>
+            }@if (dadosPessoaisForm.get('cpf')?.errors?.['cpfInvalido'] &&
+            dadosPessoaisForm.get('cpf')?.touched) {
+            <div class="cadastro-form__error">
+              CPF Inválido
+            </div>
+            }
         </div>
 
         <div class="cadastro-form__row">
@@ -75,19 +94,31 @@
         </div>
         <div class="cadastro-form__field">
           <label for="email" class="cadastro-form__label">Email</label>
+          <div class="input-container">
           <input
             id="email"
             type="text"
             class="cadastro-form__input"
             formControlName="email"
-          />
+            [ngClass]="{'cadastro-form__input-error':dadosPessoaisForm.get('email')?.invalid && dadosPessoaisForm.get('email')?.touched, 'cadastro-form__input--peding': dadosPessoaisForm.get('email')?.pending}"
+          />           
+          </div>
+
+          <div class="cadastro-form__error-container">
           @if (dadosPessoaisForm.get('email')?.errors?.['required'] &&
           dadosPessoaisForm.get('email')?.touched) {
           <div class="cadastro-form__error">Email é obrigatório</div>
           }@if (dadosPessoaisForm.get('email')?.errors?.['email'] &&
           dadosPessoaisForm.get('email')?.touched) {
           <div class="cadastro-form__error">Email inválido</div>
+          }@if (dadosPessoaisForm.get('email')?.errors?.['emailExistente']) {
+              <div class="cadastro-form__error">Email já cadastrado</div>
           }
+          </div>
+
+          <div *ngIf="dadosPessoaisForm.get('email')?.pending" class="cadastro-form__pending">
+            Verificando disponibilidade...
+          </div>
         </div>
         <div class="cadastro-form__row">
           <div class="cadastro-form__field">
