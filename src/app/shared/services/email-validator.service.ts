@@ -5,12 +5,17 @@ import { delay, Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class EmailValidatorService {
-  private emailsCadastros = [
-    'usuario1@examplo.com'
-  ]
+  private emailsCadastrados = [
+    'usuario1@exemplo.com',
+    'usuario2@exemplo.com',
+    'teste@exemplo.com',
+    'admin@exemplo.com',
+    'contato@exemplo.com'
+  ];
 
-  verificarEmailExistente(email: string): Observable<boolean>{
-    return of(this.emailsCadastros.includes(email.toLowerCase())).pipe(delay(1500))
+  verificarEmailExistente(email: string): Observable<boolean> {
+    return of(this.emailsCadastrados.includes(email.toLowerCase())).pipe(
+      delay(1500)
+    );
   }
-  constructor() { }
 }
